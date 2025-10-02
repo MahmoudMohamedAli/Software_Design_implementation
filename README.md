@@ -1,2 +1,2 @@
 # Software_Design_implementation
-this repo used to implement software design in c plus plus
+this repo is used for  implementing software design in c plus plus
