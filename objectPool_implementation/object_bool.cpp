@@ -63,18 +63,17 @@ shared_ptr<myclass> acquireObject()
 
 int main()
 {
-    objectpool objs(2);
-    auto obj_1 = objs.acquireObject();
-    auto obj_2 = objs.acquireObject();
-    auto obj_3 = objs.acquireObject();
-    auto obj_4 = objs.acquireObject();
+   objectpool pool(3); // Create a pool with a maximum size of 3
+  std::vector<std::thread> workers; // Workers list will store all the threads.
+  int workers_count = 3; // How many threads you want ?
+  
+  for(int i=0; i<workers_count; i++) {
+    workers.emplace_back(worker, std::ref(pool));
+  }
 
-    objs.releaseObject(obj_1);
-    objs.releaseObject(obj_2);
-    objs.releaseObject(obj_3);
-    //check it still the same object we used.
-    cout<<"obj_1 " << obj_1 <<endl;
-    cout<<"obj_2 " << obj_2 <<endl;
+  for(int i=0; i<workers_count; i++) {
+    workers[i].join();
+  }
 
     return 0;
 }
